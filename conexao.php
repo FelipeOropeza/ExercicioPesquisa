@@ -1,7 +1,7 @@
 <?php
     $servidor = 'localhost';
     $usuario = 'root';
-    $senha = '12345678';
+    $senha = 'kiraFE22022006';
     $banco = 'db_EmpregosEtimA';
 
     $cn = new PDO("mysql:host=$servidor;dbname=$banco",$usuario,$senha);
