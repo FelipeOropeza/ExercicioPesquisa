@@ -26,16 +26,15 @@
 <body>
 <?php
     include 'conexao.php';
-    $consulta = $cn->query("select * from tbl_empregos");
     $consultaCargo = $cn->query("select * from tbl_empregos group by Cargo");
     $consultaArea = $cn->query("select * from tbl_empregos group by Area");
 ?>
 <nav class="navbar navbar-expand-lg bg-light">
     <h5>Pesquisa</h5>
-    <form class="d-flex" method="get" role="search" action="pesquisa.php">
+    <form class="d-flex" method="get" role="search" action="index.php">
     <div id="barra1" class="col-sm-4">
         <select id="carg" name="carg" class="form-select">
-            <option disabled>Cargo</option>
+            <option value="1">Selecione:</option>
             <?php while($exibirCargo=$consultaCargo->fetch(PDO::FETCH_ASSOC)){?>
             <option><?php echo $exibirCargo['Cargo']; ?></option>
             <?php } ?>
@@ -43,41 +42,55 @@
     </div>
     <div id="barra2" class="col-sm-4">
         <select id="area" name="area" class="form-select">
-            <option disabled>Area</option>
+            <option value="1">Selecione:</option>
             <?php while($exibirArea=$consultaArea->fetch(PDO::FETCH_ASSOC)){?>
             <option><?php echo $exibirArea['Area']; ?></option>
             <?php } ?>
         </select>
     </div>
-        <button class="btn btn-outline-success" type="submit">Pesquisa</button>
+        <button class="btn btn-outline-success" type="submit" onclick="funfaLogo()">Pesquisa</button>
     </form>
 </nav>
 <br>
 <div class="table-responsive">
-    <table class="table table-bordered">
-        <tr>
-            <th>Registro</th>
-            <th>Nome</th>
-            <th>Cargo</th>
-            <th>Area</th>
-            <th>Salario</th>
-            <th>Status</th>
-            <th>Editar</th>
-            <th>Excluir</th>
-        </tr>
-        <?php while($exibirReg = $consulta->fetch(PDO::FETCH_ASSOC)){ ?>
-        <tr>
-            <td><?php echo $exibirReg['Registro'];?></td>
-            <td><?php echo $exibirReg['Nome'];?></td>
-            <td><?php echo $exibirReg['Cargo'];?></td>
-            <td><?php echo $exibirReg['Area'];?></td>
-            <td>R$ <?php echo $exibirReg['Salario'];?></td>
-            <td><?php echo $exibirReg['Status'];?></td>
-            <td><a href="#"><img src="img/alterar.png"></a></td>
-            <td><a href="#"><img src="img/excluir.png"></a></td>
-        </tr>
-        <?php } ?>
-    </table>
+        <?php
+        if(!isset($_GET["carg"]) and !isset($_GET["area"])){
+        }
+        else{
+            $cargo = $_GET['carg'];
+            $area = $_GET['area'];
+            $consulta = $cn->query("select * from tbl_empregos where Cargo = '$cargo' and Area = '$area'");
+            echo '<table class="table">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>Registro</th>';
+            echo '<th>Nome</th>';
+            echo '<th>Cargo</th>';
+            echo '<th>Area</th>';
+            echo '<th>Salario</th>';
+            echo '<th>Status</th>';
+            echo '<th>Alterar</th>';
+            echo '<th>Excluir</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+            while($exibirReg = $consulta->fetch(PDO::FETCH_ASSOC)){ ?>
+                <?php echo '<tr>';?>
+                <?php echo "<td>{$exibirReg['Registro']}</td>"; ?>
+                <?php echo "<td>{$exibirReg['Nome']}</td>";?>
+                <?php echo "<td>{$exibirReg['Cargo']}</td>";?>
+                <?php echo "<td>{$exibirReg['Area']}</td>";?>
+                <?php echo "<td>{$exibirReg['Salario']}</td>";?>
+                <?php echo "<td>{$exibirReg['Status']}</td>";?>
+                <?php echo "<td><a href='FormAlt.php?cd={$exibirReg['Registro']}'>Alterar</a></td>";?>
+                <?php echo "<td>Exuir</td>";?>
+                <?php echo '<tr>';?>
+            <?php
+         }
+        }
+        echo '</tbody>';
+        echo '</table>'; ?>
 </div>
+<script src="script.js"></script>
 </body>
 </html>
