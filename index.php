@@ -21,6 +21,10 @@
             width: 30px;
             height: 30px;
         }
+        a{
+            text-decoration: none;
+            color:black
+        }
     </style>
 </head>
 <body>
