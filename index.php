@@ -87,7 +87,7 @@
                 <?php echo "<td>{$exibirReg['Salario']}</td>";?>
                 <?php echo "<td>{$exibirReg['Status']}</td>";?>
                 <?php echo "<td><a href='FormAlt.php?cd={$exibirReg['Registro']}'>Alterar</a></td>";?>
-                <?php echo "<td>Exuir</td>";?>
+                <?php echo "<td><a href='excluir.php?cd={$exibirReg['Registro']}'>Excluir</td>";?>
                 <?php echo '<tr>';?>
             <?php
          }
