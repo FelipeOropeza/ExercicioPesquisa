@@ -6,14 +6,14 @@
     $vCarg = $_POST['carg'];
     $vArea = $_POST['area'];
     $vSala = $_POST['txtsalario'];
-    $VStat = $_POST['txtstatus'];
+    $VStat = $_POST['stat'];
 
     $alterar = $cn->query("update tbl_empregos set
     Nome = '$vNome',
     Cargo = '$vCarg',
     Area = '$vArea',
     Salario = '$vSala',
-    Status = '$vStat'
+    Status = '$VStat'
     where Registro = '$cd';
     ");
     header('location:index.php');
