@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
         #div{
-            margin-top: 50px;
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -26,6 +26,11 @@
         <div class="col-sm-3 offset-md-4">
             <h2>Alteração de registro</h2>
             <br>
+            <label for="prod" class="form-label">Registro:</label>
+            <input type="text" value="<?php echo $exibirReg['Registro']; ?>" class="form-control" id="txtnome" name="txtnome">
+        </div>
+        <br>
+        <div class="col-sm-3 offset-md-4">
             <label for="prod" class="form-label">Nome</label>
             <input type="text" value="<?php echo $exibirReg['Nome']; ?>" class="form-control" id="txtnome" name="txtnome">
         </div>
@@ -56,13 +61,17 @@
         </div>
         <br>
         <div class="col-sm-3 offset-md-4">
-            <label for="prod" class="form-label">Status</label>
-            <input type="text" value="<?php echo $exibirReg['Status']; ?>" class="form-control" id="txtstatus" name="txtstatus">
+            <label for="stat" class="form-label">Selecione o status:</label>
+            <select id="stat" name="stat" class="form-select">
+            <option value="1">Selecione:</option>
+            <option>Ativo</option>
+            <option>Inativo</option>
+            </select>
         </div>
         <br>
         <div class="col-sm-3 offset-md-4">
             <button type="submit" class="btn btn-primary">Alterar</button>
-    </div>
+        </div>
 </form>
 </div>
 </body>
