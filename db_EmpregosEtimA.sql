@@ -16,3 +16,5 @@ select * from tbl_empregos;
 select Cargo, Area from tbl_empregos;
 
 select * from tbl_empregos group by Cargo;
+
+select * from tbl_empregos where Cargo = 'Gerente' and Area = 'Financeiro';

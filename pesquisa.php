@@ -21,6 +21,10 @@
             width: 30px;
             height: 30px;
         }
+        #link{
+            text-decoration: none;
+            color:black;
+        }
     </style>
 </head>
 <body>
@@ -28,12 +32,12 @@
     include 'conexao.php';
     $cargo = $_GET['carg'];
     $area = $_GET['area'];
-    $consulta = $cn->query("select * from tbl_empregos");
+    $consulta = $cn->query("select * from tbl_empregos where Cargo = '$cargo' and Area = '$area'");
     $consultaCargo = $cn->query("select * from tbl_empregos group by Cargo");
     $consultaArea = $cn->query("select * from tbl_empregos group by Area");
 ?>
 <nav class="navbar navbar-expand-lg bg-light">
-    <h5>Pesquisa</h5>
+    <h5><a id="link" href="index.php">Pesquisa</a></h5>
     <form class="d-flex" method="get" role="search" action="pesquisa.php">
     <div id="barra1" class="col-sm-4">
         <select id="carg" name="carg" class="form-select">
@@ -67,16 +71,18 @@
             <th>Editar</th>
             <th>Excluir</th>
         </tr>
+        <?php while($exibirPesq = $consulta->fetch(PDO::FETCH_ASSOC)){ ?>
         <tr>
-            <td><</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>R$ </td>
-            <td></td>
+            <td><?php echo $exibirPesq['Registro'];?></td>
+            <td><?php echo $exibirPesq['Nome'];?></td>
+            <td><?php echo $exibirPesq['Cargo'];?></td>
+            <td><?php echo $exibirPesq['Area'];?></td>
+            <td>R$ <?php echo $exibirPesq['Salario'];?></td>
+            <td><?php echo $exibirPesq['Status'];?></td>
             <td><a href="#"><img src="img/alterar.png"></a></td>
             <td><a href="#"><img src="img/excluir.png"></a></td>
         </tr>
+        <?php } ?>
     </table>
 </div>
 </body>
