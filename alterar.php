@@ -6,7 +6,7 @@
     $vCarg = $_POST['carg'];
     $vArea = $_POST['area'];
     $vSala = $_POST['txtsalario'];
-    $VStat = $_POST['stat'];
+    $VStat = $_POST['rdbStatus'];
 
     $alterar = $cn->query("update tbl_empregos set
     Nome = '$vNome',

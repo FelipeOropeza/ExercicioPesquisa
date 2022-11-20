@@ -17,8 +17,9 @@
     include 'conexao.php';
     $cd = $_GET["cd"];
     $consulta = $cn->query("select * from tbl_empregos where Registro = '$cd'");
-    $consultaCargo = $cn->query("select * from tbl_empregos group by Cargo");
-    $consultaArea = $cn->query("select * from tbl_empregos group by Area");
+    $consultaStatus = $cn->query("select * from tbl_empregos group by Status");
+    $consultaCargo = $cn->query("select Cargo from tbl_empregos where Registro='$cd' union select Cargo from tbl_empregos where Registro!='$cd'");
+    $consultaArea = $cn->query("select Area from tbl_empregos where Registro='$cd' union select Area from tbl_empregos where Registro!='$cd'");
     $exibirReg = $consulta->fetch(PDO::FETCH_ASSOC);
 ?>
 <div id="div" class="container">
@@ -26,7 +27,7 @@
         <div class="col-sm-3 offset-md-4">
             <h2>Alteração de registro</h2>
             <br>
-            <label for="prod" class="form-label">Registro:</label>
+            <label for="prod" class="form-label">Registro</label>
             <input type="text" value="<?php echo $exibirReg['Registro']; ?>" class="form-control" id="txtnome" name="txtnome">
         </div>
         <br>
@@ -38,9 +39,8 @@
         <div class="col-sm-3 offset-md-4">
             <label for="carg" class="form-label">Selecione o cargo</label>
             <select id="carg" name="carg" class="form-select">
-            <option value="1">Selecione:</option>
             <?php while($exibirCargo=$consultaCargo->fetch(PDO::FETCH_ASSOC)){?>
-            <option><?php echo $exibirCargo['Cargo']; ?></option>
+            <option value="<?php echo $exibirCargo['Cargo'];?>"><?php echo $exibirCargo['Cargo']; ?></option>
             <?php } ?>
         </select>
         </div>
@@ -48,9 +48,8 @@
         <div class="col-sm-3 offset-md-4">
             <label for="area" class="form-label">Selecione o area</label>
             <select id="area" name="area" class="form-select">
-            <option value="1">Selecione:</option>
             <?php while($exibirArea=$consultaArea->fetch(PDO::FETCH_ASSOC)){?>
-            <option><?php echo $exibirArea['Area']; ?></option>
+            <option value="<?php echo $exibirArea['Area'];?>"><?php echo $exibirArea['Area']; ?></option>
             <?php } ?>
         </select>
         </div>
@@ -60,14 +59,19 @@
             <input type="text" value="<?php echo $exibirReg['Salario']; ?>" class="form-control" id="txtsalario" name="txtsalario">
         </div>
         <br>
+        <?php if($exibirReg['Status'] == "Ativo"){ ?>
         <div class="col-sm-3 offset-md-4">
-            <label for="stat" class="form-label">Selecione o status:</label>
-            <select id="stat" name="stat" class="form-select">
-            <option value="1">Selecione:</option>
-            <option>Ativo</option>
-            <option>Inativo</option>
-            </select>
+            <label for="prod" class="form-label">Status</label><br>    
+            <input class="form-check-input" type="radio" name="rdbStatus" value="Ativo" checked> Ativo
+            <input class="form-check-input" type="radio" name="rdbStatus" value="Inativo" > Inativo
         </div>
+        <?php } else {?>
+        <div class="col-sm-3 offset-md-4">
+            <label for="prod" class="form-label">Status</label><br>
+            <input class="form-check-input" type="radio" name="rdbStatus" value="Ativo" > Ativo
+            <input class="form-check-input" type="radio" name="rdbStatus" value="Inativo" checked> Inativo
+        </div>
+        <?php } ?>
         <br>
         <div class="col-sm-3 offset-md-4">
             <button type="submit" class="btn btn-primary">Alterar</button>
